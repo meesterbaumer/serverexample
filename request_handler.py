@@ -1,8 +1,21 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from users import get_all_users
 
 
 class HandleRequests(BaseHTTPRequestHandler):
+    def parse_url(self, path):
+      path_params = path.split("/")
+      resource = path_params[1]
+      id = None
+
+      try:
+          id = int(path_params[2])
+      except IndexError:
+          pass
+      except ValueError:
+          pass
+      return (resource, id)
 
     # Here's a class function
     def _set_headers(self, status):
@@ -19,7 +32,16 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept')
         self.end_headers()
 
+    def do_GET(self):
 
+      self._set_headers(200)
+      response = {}
+
+      (resource, id) = self.parse_url(self.path)
+
+      if resource == "users":
+        response = f"{get_all_users()}"
+      self.wfile.write(response.encode())
 
 
 
