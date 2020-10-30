@@ -2,7 +2,6 @@ import sqlite3
 import json
 from models import User
 
-
 def get_all_users():
     with sqlite3.connect("./database.db") as conn:
       conn.row_factory = sqlite3.Row

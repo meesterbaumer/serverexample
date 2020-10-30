@@ -2,7 +2,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users import get_all_users
 
-
 class HandleRequests(BaseHTTPRequestHandler):
     def parse_url(self, path):
       path_params = path.split("/")
@@ -42,9 +41,6 @@ class HandleRequests(BaseHTTPRequestHandler):
       if resource == "users":
         response = f"{get_all_users()}"
       self.wfile.write(response.encode())
-
-
-
 
 # This function is not inside the class. It is the starting
 # point of this application.
